@@ -1,0 +1,45 @@
+Menu="Utilities"
+Icon="espurnapm.png"
+Title="ESPurna Power Monitor"
+---
+<?php
+$espurnapm_cfg 			= parse_plugin_cfg("espurnapm",true);
+$espurnapm_device_ip	= isset($espurnapm_cfg['DEVICE_IP']) ? $espurnapm_cfg['DEVICE_IP'] : "";
+$espurnapm_device_api	= isset($espurnapm_cfg['DEVICE_API']) ? $espurnapm_cfg['DEVICE_API'] : "";
+$espurnapm_uirefresh 		= isset($espurnapm_cfg['UIREFRESH']) ? $espurnapm_cfg['UIREFRESH'] : "5000";
+$espurnapm_costs_price	= isset($espurnapm_cfg['COSTS_PRICE']) ? $espurnapm_cfg['COSTS_PRICE'] : "0.0";
+$espurnapm_costs_unit	= isset($espurnapm_cfg['COSTS_UNIT']) ? $espurnapm_cfg['COSTS_UNIT'] : "USD";
+?>
+
+<form markdown="1" method="POST" action="/update.php" target="progressFrame">
+<input type="hidden" name="#file" value="espurnapm/espurnapm.cfg" />
+
+Api key:
+: <input id="DEVICE_API" type="text" class="stopped" name="DEVICE_API" maxlength="50" value="<?=$espurnapm_device_api;?>" title="" placeholder="" >  
+
+Device IP:
+: <input id="DEVICE_IP" type="text" class="stopped" name="DEVICE_IP" maxlength="15" value="<?=$espurnapm_device_ip;?>" title="" placeholder="" >  
+
+UI Refresh rate (Milliseconds):
+: <input type="text" name="UIREFRESH" class="narrow" maxlength="50" value="<?=$espurnapm_uirefresh;?>" placeholder="5000">
+
+Price per kWh for cost calculation:
+: <input id="COSTS_PRICE" type="text" class="stopped" name="COSTS_PRICE" maxlength="10" value="<?=$espurnapm_costs_price;?>" title="" placeholder="0.00" >  
+
+Unit for cost calculation:
+: <input id="COSTS_UNIT" type="text" class="stopped" name="COSTS_UNIT" maxlength="10" value="<?=$espurnapm_costs_unit;?>" title="" placeholder="" >  
+
+ <input id="DEFAULT" class="stopped" type="submit" value="Default" onClick="resetDATA(this.form)">
+: <input id="btnApply" type="submit" value="Apply"><input type="button" value="Done" onClick="done()">
+</form>
+
+
+<script type="text/javascript">
+function resetDATA(form) {
+	form.DEVICE_IP.value = "";
+  form.DEVICE_API.value = "";
+  form.UIREFRESH.value = 5000;
+  form.COSTS_PRICE.value = 0.00;
+  form.COSTS_UNIT.value = "USD";
+}
+</script>
